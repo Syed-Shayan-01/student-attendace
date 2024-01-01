@@ -8,14 +8,45 @@ import {
 } from '@ant-design/icons';
 import { Layout, Menu, theme } from 'antd';
 import List from "../../components/list/List";
-const { Header, Sider, Content } = Layout;
+import 'reactjs-popup/dist/index.css';
+import AttendForm from "../attendaceForm/AttendForm";
+import { Link } from "react-router-dom";
+const { Header, Sider, items } = Layout;
 
-export const Student = () => {
+const Student = () => {
     const {
         token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
 
-    const StudentContent = () => {
+    const StudentHeader = () => {
+        return (
+            <nav className="flex justify-between items-center mx-24">
+                {/* <div className=" flex k-center  text-[2rem] text-gray-500  font-bold">
+            <MdAccountCircle className="mr-2 text-blue-500 text-[3.2rem]" />Students
+        </div>
+        <Buttons /> */}
+                <div className={'flex items-center  text-[2rem] text-gray-500  font-bold'}>
+                    <MdAccountCircle className="mr-2 text-blue-500 text-[3.2rem]" />  <Logo />
+                </div>
+               <Link to={'/form'}><Buttons /></Link> 
+            </nav>
+        )
+    }
+
+    const Studentitems = () => {
+        const content = [
+            {
+                id: 1,
+                ProfileImg: `/logo192.png`,
+                Name: "Syed Shayan",
+                CourseName: "Web & App"
+            },
+            {
+                id: 2,
+                ProfileImg: `/logo192.png`,
+                Name: "Syed Shayan",
+                CourseName: "Web & App"
+            }]
         return (
             <>
                 <div className="flex justify-between pr-72 shadow-lg  text-white bg-blue-500 w-full h-10 rounded-lg">
@@ -25,29 +56,19 @@ export const Student = () => {
                     <List itemTxt={'Course Name'} />
                 </div>
 
-                <div className="flex mt-8 justify-between pr-72 shadow-lg w-full h-10 rounded-lg">
-                    <List itemTxt={'id'} />
-                    <List itemTxt={'Profile Img'} />
-                    <List itemTxt={'Name'} />
-                    <List itemTxt={'Course Name'} />
-                </div>
+                {content.map((items) => (
+                    <div key={items.id} className="flex justify-between mt-8  pr-72 shadow-lg w-full h-10 rounded-lg">
+                        <List itemTxt={`${items.id}`} />
+                        {/* <List itemTxt={`${items.ProfileImg}`} /> */}
+                        <img src={`${items.ProfileImg}`} className=" w-6 h-7 mx-10" />
+                        <List itemTxt={`${items.Name}`} />
+                        <List itemTxt={`${items.CourseName}`} />
+                    </div>
+                ))}
             </>
         )
     }
-    const StudentHeader = () => {
-        return (
-            <nav className="flex justify-between items-center mx-24">
-                {/* <div className=" flex items-center  text-[2rem] text-gray-500  font-bold">
-            <MdAccountCircle className="mr-2 text-blue-500 text-[3.2rem]" />Students
-        </div>
-        <Buttons /> */}
-                <div className={'flex items-center  text-[2rem] text-gray-500  font-bold'}>
-                    <MdAccountCircle className="mr-2 text-blue-500 text-[3.2rem]" />  <Logo />
-                </div>
-                <Buttons />
-            </nav>
-        )
-    }
+
     return (
         <Layout style={{ height: '100vh' }}>
             <Sider trigger={null} collapsible >
@@ -84,7 +105,7 @@ export const Student = () => {
                 >
                     <StudentHeader />
                 </Header>
-                <Content
+                <items
                     style={{
                         margin: '24px 16px',
                         padding: 24,
@@ -94,8 +115,8 @@ export const Student = () => {
                         height: '100%',
                     }}
                 >
-                    <StudentContent />
-                </Content>
+                    <Studentitems />
+                </items>
             </Layout>
         </Layout>
     );
