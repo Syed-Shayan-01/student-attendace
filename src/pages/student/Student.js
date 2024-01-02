@@ -11,6 +11,8 @@ import List from "../../components/list/List";
 import 'reactjs-popup/dist/index.css';
 import AttendForm from "../attendaceForm/AttendForm";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import baseUrl from "../../config/BaseUrl";
 const { Header, Sider, items } = Layout;
 
 const Student = () => {
@@ -28,25 +30,30 @@ const Student = () => {
                 <div className={'flex items-center  text-[2rem] text-gray-500  font-bold'}>
                     <MdAccountCircle className="mr-2 text-blue-500 text-[3.2rem]" />  <Logo />
                 </div>
-               <Link to={'/form'}><Buttons /></Link> 
+                <Link to={'/form'}><Buttons /></Link>
             </nav>
         )
     }
 
     const Studentitems = () => {
-        const content = [
-            {
-                id: 1,
-                ProfileImg: `/logo192.png`,
-                Name: "Syed Shayan",
-                CourseName: "Web & App"
-            },
-            {
-                id: 2,
-                ProfileImg: `/logo192.png`,
-                Name: "Syed Shayan",
-                CourseName: "Web & App"
-            }]
+        const [data, setData] = useState([]);
+
+        useEffect(() => {
+            const fetchData = async () => {
+                try {
+                    const response = await fetch(`${baseUrl}users`); // Use the correct endpoint for fetching all users
+                    const jsonData = await response.json();
+                    setData(jsonData);
+                } catch (error) {
+                    console.error("Error:", error);
+                }
+            };
+
+            fetchData();
+        }, []);
+        if (data.length === 0) {
+            return <div>Loading</div>;
+        }
         return (
             <>
                 <div className="flex justify-between pr-72 shadow-lg  text-white bg-blue-500 w-full h-10 rounded-lg">
@@ -56,13 +63,13 @@ const Student = () => {
                     <List itemTxt={'Course Name'} />
                 </div>
 
-                {content.map((items) => (
+                {data.map((items) => (
                     <div key={items.id} className="flex justify-between mt-8  pr-72 shadow-lg w-full h-10 rounded-lg">
                         <List itemTxt={`${items.id}`} />
                         {/* <List itemTxt={`${items.ProfileImg}`} /> */}
                         <img src={`${items.ProfileImg}`} className=" w-6 h-7 mx-10" />
-                        <List itemTxt={`${items.Name}`} />
-                        <List itemTxt={`${items.CourseName}`} />
+                        <List itemTxt={`${items.name}`} />
+                        <List itemTxt={`${items.course}`} />
                     </div>
                 ))}
             </>
