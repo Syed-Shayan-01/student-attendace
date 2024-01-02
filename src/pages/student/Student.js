@@ -41,18 +41,17 @@ const Student = () => {
         useEffect(() => {
             const fetchData = async () => {
                 try {
-                    const response = await fetch(`${baseUrl}users`); // Use the correct endpoint for fetching all users
-                    const jsonData = await response.json();
-                    setData(jsonData);
+                    const response = await fetch(`${baseUrl}user/`); // Use the correct endpoint for fetching all users
+                    const userData = await response.json();
+                    setData(userData);
                 } catch (error) {
                     console.error("Error:", error);
                 }
             };
-
             fetchData();
         }, []);
-        if (data.length === 0) {
-            return <div>Loading</div>;
+        if (!data) {
+            return <div>Loading..</div>;
         }
         return (
             <>
@@ -63,15 +62,20 @@ const Student = () => {
                     <List itemTxt={'Course Name'} />
                 </div>
 
-                {data.map((items) => (
-                    <div key={items.id} className="flex justify-between mt-8  pr-72 shadow-lg w-full h-10 rounded-lg">
-                        <List itemTxt={`${items.id}`} />
-                        {/* <List itemTxt={`${items.ProfileImg}`} /> */}
-                        <img src={`${items.ProfileImg}`} className=" w-6 h-7 mx-10" />
-                        <List itemTxt={`${items.name}`} />
-                        <List itemTxt={`${items.course}`} />
-                    </div>
-                ))}
+                {data.map((items) => {
+                    const id = items._id.match(1);
+
+                    return (
+                        <div key={items._id} className="flex justify-between mt-8  pr-72 shadow-lg w-full h-10 rounded-lg" >
+                            <List itemTxt={`${id}`} />
+                            <img src={`${items.ProfileImg}`} className=" w-6 h-7 mx-10" />
+                            <List itemTxt={`${items.name}`} />
+                            <List itemTxt={`${items.course}`} />
+                        </div >
+                    )
+                })
+                }
+
             </>
         )
     }
