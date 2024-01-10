@@ -55,12 +55,14 @@ const AttendForm = () => {
                                 accept="image/*"
                                 onChange={handleImage}
                                 ref={fileInputRef}
-                            // value={Images}
+                                // value={Images}
                             ></input>
-                            {Images ? <img src={`${Images}`} onClick={handleImageClick} className='w-40 h-40 z-[1] rounded-full' /> :
-                                <img src='https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+                            {Images ?
+                                <img src={`${Images}`} onClick={handleImageClick} className='w-40 h-40 z-[1] rounded-full' /> :
+                                <img src='/Images/profile.png'
                                     onClick={handleImageClick}
-                                    className='w-40 z-[1] rounded-full ' />}
+                                    className='w-40 z-[1] rounded-full ' />
+                            }
                             <div className="p-2 w-full">
                                 <div className="relative">
                                     <label htmlFor="name" className="leading-7 text-sm text-gray-600">Name</label>
