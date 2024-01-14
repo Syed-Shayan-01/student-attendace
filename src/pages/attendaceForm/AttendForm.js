@@ -23,7 +23,7 @@ const AttendForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const data = { name, email, password, course, phoneNumber }
+        const data = { name, email, password, course, phoneNumber, Images }
         try {
             const response = await fetch(`${baseUrl}attendance/`, {
                 method: "POST", // or 'PUT'
@@ -55,7 +55,7 @@ const AttendForm = () => {
                                 accept="image/*"
                                 onChange={handleImage}
                                 ref={fileInputRef}
-                                // value={Images}
+                            // value={Images}
                             ></input>
                             {Images ?
                                 <img src={`${Images}`} onClick={handleImageClick} className='w-40 h-40 z-[1] rounded-full' /> :
