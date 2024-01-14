@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import baseUrl from '../../config/BaseUrl';
 import { useNavigate } from 'react-router-dom';
 const AttendForm = () => {
-    const [Images, setImages] = useState(null);
+    const [image, setImages] = useState(null);
     const [name, setname] = useState('');
     const [email, setemail] = useState('');
     const [password, setpassword] = useState('');
@@ -12,7 +12,8 @@ const AttendForm = () => {
     const navigate = useNavigate();
     const handleImage = (e) => {
         const form = e.target.files[0]
-        const imageUrl = URL.createObjectURL(form);
+        const fornData = new FormData();
+        const imageUrl = fornData.append(form);
         setImages(imageUrl);
     }
 
@@ -23,7 +24,7 @@ const AttendForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const data = { name, email, password, course, phoneNumber, Images }
+        const data = { name, email, password, course, phoneNumber, image }
         try {
             const response = await fetch(`${baseUrl}attendance/`, {
                 method: "POST", // or 'PUT'
@@ -57,8 +58,8 @@ const AttendForm = () => {
                                 ref={fileInputRef}
                             // value={Images}
                             ></input>
-                            {Images ?
-                                <img src={`${Images}`} onClick={handleImageClick} className='w-40 h-40 z-[1] rounded-full' /> :
+                            {image ?
+                                <img src={`${image}`} onClick={handleImageClick} className='w-40 h-40 z-[1] rounded-full' /> :
                                 <img src='/Images/profile.png'
                                     onClick={handleImageClick}
                                     className='w-40 z-[1] rounded-full ' />

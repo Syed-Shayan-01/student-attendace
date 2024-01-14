@@ -13,7 +13,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/student" element={<Student />} />
           <Route path="/form" element={<AttendForm />} />
-          <Route  path="/Image" element={<Image />}/>
+          <Route path="/Image" element={<Image />} />
         </Routes>
       </BrowserRouter>
     </>
