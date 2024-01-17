@@ -11,10 +11,11 @@ const AttendForm = () => {
     const fileInputRef = useRef();
     const navigate = useNavigate();
     const handleImage = (e) => {
-        const form = e.target.files[0]
-        const fornData = new FormData();
-        const imageUrl = fornData.append(form);
-        setImages(imageUrl);
+
+        const form = e.target.files[0];
+        const Image = new FormData();
+        Image.append('image', form.image)
+        setImages(form)
     }
 
     const handleImageClick = () => {
@@ -56,8 +57,7 @@ const AttendForm = () => {
                                 accept="image/*"
                                 onChange={handleImage}
                                 ref={fileInputRef}
-                            // value={Images}
-                            ></input>
+                            />
                             {image ?
                                 <img src={`${image}`} onClick={handleImageClick} className='w-40 h-40 z-[1] rounded-full' /> :
                                 <img src='/Images/profile.png'
